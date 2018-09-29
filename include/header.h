@@ -1,17 +1,9 @@
-#include <stdio.h>
-struct add_options_ptr{
-    struct add_options_ptr (*fp)(char *option,char *message);
-};
-struct Options_Description
-{
-    struct add_options_ptr add_options;
-};
+#include <malloc.h>
 
-struct add_options_ptr test(char *option,char *message)
+typedef struct Options_Description
 {
-    struct add_options_ptr aop;
-    printf("Hello");
-    return aop;
-}
+    char **options;
+    struct Options_Description* (*add_options)(char **, int);
+}options_description;
 
 struct Options_Description* new_Options_Description();
