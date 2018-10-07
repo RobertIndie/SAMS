@@ -15,20 +15,3 @@ CommandRunner* new_CommandRunner()
     CommandRunner* product = (CommandRunner*)malloc(sizeof(CommandRunner));
     return product;
 }
-
-StudentFactory* new_StudentFactory()
-{
-    StudentFactory* product = (StudentFactory*)malloc(sizeof(StudentFactory));
-    return product;
-}
-
-DataBase* new_DataBase()
-{
-    DataBase* product = (DataBase*)malloc(sizeof(DataBase));
-    return product;
-}
-
-void add(char** paras,size_t len)
-{
-
-}
