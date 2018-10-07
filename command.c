@@ -9,3 +9,9 @@ Author: AaronRobert \
 
     printf("%s",help_formatter);
 }
+
+CommandRunner* new_CommandRunner()
+{
+    CommandRunner* result = (CommandRunner*)malloc(sizeof(CommandRunner));
+    return result;
+}
