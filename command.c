@@ -12,6 +12,17 @@ Author: AaronRobert \
 
 CommandRunner* new_CommandRunner()
 {
-    CommandRunner* result = (CommandRunner*)malloc(sizeof(CommandRunner));
-    return result;
+    CommandRunner* product = (CommandRunner*)malloc(sizeof(CommandRunner));
+    return product;
+}
+
+StudentFactory* new_StudentFactory()
+{
+    StudentFactory* product = (StudentFactory*)malloc(sizeof(StudentFactory));
+    return product;
+}
+
+void add(char** paras,int len)
+{
+
 }
