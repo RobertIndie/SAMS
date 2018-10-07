@@ -7,9 +7,11 @@ void ParseCommand(int argc,char **argv);
 
 typedef struct command_runner
 {
+    struct data_base* database;
+    struct student_factory* studentFactory;
     void (*add)(char**,size_t);//add id 10001 name robert math 100 english 100 computer 100
     void (*help)();//print help message
-    void (*list)();//list all students message
+    void (*list)(struct command_runner*);//list all students message
     void (*sort)(char*);//sort by property and print stuedents message list. sort math
     void (*remove)(char**,size_t);//remove one or more students message with id. remove 10001
     void (*edit)(char**,size_t);//edit student message serarched by id. edit 10001 math 200 english 150
@@ -41,6 +43,6 @@ typedef struct data_base
     Student* (*get)(struct data_base*,int);//get a student pointer by id.
 }DataBase;
 
-CommandRunner* new_CommandRunner();
+CommandRunner* new_CommandRunner(DataBase*,StudentFactory*);
 StudentFactory* new_StudentFactory();
 DataBase* new_DataBase();

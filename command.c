@@ -10,8 +10,25 @@ Author: AaronRobert \
     printf("%s",help_formatter);
 }
 
-CommandRunner* new_CommandRunner()
+void list(CommandRunner* this)
+{
+    Student* p = this->database->data;
+    printf("list:\n");
+    for(int i=0;i<this->database->count;i++){
+        printf("%d\n",p->id);
+        p = p->next;
+    }
+}
+
+CommandRunner* new_CommandRunner(DataBase* database,StudentFactory* studentFactory)
 {
     CommandRunner* product = (CommandRunner*)malloc(sizeof(CommandRunner));
+    if(!product){
+        printf("[ERROR]Out of memory");
+        return NULL;
+    }
+    product->database = database;
+    product->studentFactory = studentFactory;
+    product->list = list;
     return product;
 }

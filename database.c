@@ -3,7 +3,10 @@
 Student* createStudent(int id)
 {
     Student* product = (Student*)malloc(sizeof(Student));
-    if(!product)printf("[ERROR]Out of memory");
+    if(!product){
+        printf("[ERROR]Out of memory");
+        return NULL;
+    }
     product->id = id;
     product->name = NULL;
     product->math_score = 0.0;
@@ -17,7 +20,10 @@ Student* createStudent(int id)
 StudentFactory* new_StudentFactory()
 {
     StudentFactory* product = (StudentFactory*)malloc(sizeof(StudentFactory));
-    if(!product)printf("[ERROR]Out of memory");
+    if(!product){
+        printf("[ERROR]Out of memory") ;
+        return NULL;
+    }
     return product;
 }
 
