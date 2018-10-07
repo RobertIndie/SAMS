@@ -1,11 +1,11 @@
 #include "include/header.h"
-#include <stdio.h>
 
-char optionsList[][30] = {
-    "help", "Print this help message"
-};
-options_description* new_Options_Description()
+void ParseCommand(int argc,char **argv)
 {
-    options_description* obj = (options_description*)malloc(sizeof(options_description));
-    obj->options = (char**)optionsList;
+    char help_formatter[] = \
+    "This Student-Achievement-Management-System is open source under GPLv2.0.\n\
+Author: AaronRobert \
+    ";
+
+    printf("%s",help_formatter);
 }

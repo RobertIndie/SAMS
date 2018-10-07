@@ -1,8 +1,5 @@
 #include <malloc.h>
+#include <stdio.h>
+#include <string.h>
 
-typedef struct Options_Description
-{
-    char **options;
-}options_description;
-
-struct Options_Description* new_Options_Description();
+void ParseCommand(int argc,char **argv);
