@@ -1,6 +1,6 @@
-#include "header.h"
+#include "include/header.h"
 
-Student* (*createStudent)(int id)
+Student* createStudent(int id)
 {
     Student* product = (Student*)malloc(sizeof(Student));
     if(!product)printf("[ERROR]Out of memory");
