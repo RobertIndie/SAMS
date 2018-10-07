@@ -22,7 +22,13 @@ StudentFactory* new_StudentFactory()
     return product;
 }
 
-void add(char** paras,int len)
+DataBase* new_DataBase()
+{
+    DataBase* product = (DataBase*)malloc(sizeof(DataBase));
+    return product;
+}
+
+void add(char** paras,size_t len)
 {
 
 }

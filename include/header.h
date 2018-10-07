@@ -1,17 +1,18 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
+#include "setjmp.h"
 
 void ParseCommand(int argc,char **argv);
 
 typedef struct command_runner
 {
-    void (*add)(char**,int);//add id 10001 name robert math 100 english 100 computer 100
+    void (*add)(char**,size_t);//add id 10001 name robert math 100 english 100 computer 100
     void (*help)();//print help message
     void (*list)();//list all students message
     void (*sort)();//sort and print stuedents message list
-    void (*remove)(char**,int);//remove one or more students message with id. remove 10001
-    void (*edit)(char**,int);//edit student message serarched by id. edit 10001 math 200 english 150
+    void (*remove)(char**,size_t);//remove one or more students message with id. remove 10001
+    void (*edit)(char**,size_t);//edit student message serarched by id. edit 10001 math 200 english 150
 }CommandRunner;
 
 typedef struct student_message
@@ -30,5 +31,16 @@ typedef struct student_factory
     Student* (*createStudent)(int id);
 }StudentFactory;
 
+typedef struct data_base
+{
+    Student* data;//link list
+    size_t count;
+    void (*add)(Student*);
+    Student* (*sort)();//return a sorted link list
+    void (*remove)(int);//remove a student by id
+    Student* (*get)(int);//get a student pointer by id.
+}DataBase;
+
 CommandRunner* new_CommandRunner();
 StudentFactory* new_StudentFactory();
+DataBase* new_DataBase();
