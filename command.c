@@ -14,7 +14,7 @@ void list(CommandRunner* this)
 {
     Student* p = this->database->data;
     printf("List(count:%d):\n",this->database->count);
-    for(int i=0;i<this->database->count;i++){
+    for(size_t i=0;i<this->database->count;i++){
         printf("%d\n",p->id);
         p = p->next;
     }

@@ -28,7 +28,6 @@ StudentFactory* new_StudentFactory()
     return product;
 }
 
-//Private
 Student* getByIndex(DataBase* this,size_t index)
 {
     Student* p = this->data;
@@ -40,14 +39,62 @@ void DataBase_add(DataBase* this,Student* stu)
 {
     if(!this->count){
         this->data=stu;
-        this->count++;
     }
     else{
         Student* lastStu = getByIndex(this,this->count-1);
         lastStu->next = stu;
         stu->prev = lastStu;
-        this->count++;
     }
+    this->count++;
+}
+
+//if a>b return 2
+//if a=b return 1
+//if a<b return 0
+//a>=b usage: if(compare(a,b,compareFlag))
+//a<=b usage: if(compare(b,a,compareFlag))
+int compare(Student* a,Student* b,int compareFlag)
+{
+    return a->id>=b->id?(a->id==b->id?1:2):0;
+}
+
+void quicksort(Student** list, int low, int high,int compareFlag)
+{
+    int i=low;
+    int j=high;
+    Student* temp=*(list+i);
+    if(low>high){
+        return;
+    }
+    while(i<j){
+        while(compare(*(list+j),temp,compareFlag) && i<j){
+            j--;
+        }
+        *(list+i) = *(list+j);
+        while(compare(temp,*(list+i),compareFlag) && i<j){
+            i++;
+        }
+        *(list+j) = *(list+i);
+    }
+    *(list+i) = temp;
+    quicksort(list,low,i-1,compareFlag);
+    quicksort(list,j+1,high,compareFlag);
+}
+
+//if count is zero,retunr NULL
+//return result is a new memory.
+Student** DataBase_sort(DataBase* this,int compareFlag)
+{
+    size_t count = this->count;
+    if(!count)return NULL;
+    Student** studentList = (Student**)malloc(sizeof(Student*)*count);//new memory
+    Student* p=this->data;
+    for(size_t i=0;i<count;i++){
+        *(studentList+i)=p;
+        p=p->next;
+    }
+    quicksort(studentList,0,this->count-1,compareFlag);
+    return studentList;
 }
 
 DataBase* new_DataBase()
@@ -55,5 +102,6 @@ DataBase* new_DataBase()
     DataBase* product = (DataBase*)malloc(sizeof(DataBase));
     product->count = 0;
     product->add = DataBase_add;
+    product->sort = DataBase_sort;
     return product;
 }

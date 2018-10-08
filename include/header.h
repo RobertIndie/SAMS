@@ -38,7 +38,7 @@ typedef struct data_base
     Student* data;//link list
     size_t count;//do not change this var outside the database.c
     void (*add)(struct data_base*,Student*);
-    Student* (*sort)(struct data_base*);//return a sorted link list
+    Student** (*sort)(struct data_base*,int);//return a sorted link list
     void (*remove)(struct data_base*,int);//remove a student by id
     Student* (*get)(struct data_base*,int);//get a student pointer by id.
 }DataBase;

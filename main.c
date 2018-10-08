@@ -3,15 +3,35 @@
 void test()
 {
     StudentFactory* factory = new_StudentFactory();
-    Student* stu = factory->createStudent(10001);
     DataBase* database = new_DataBase();
     CommandRunner* commandRunner = new_CommandRunner(database,factory);
-    database->add(database,stu);
+    Student* stu1 = factory->createStudent(10001);
+    Student* stu2 = factory->createStudent(10046);
+    Student* stu3 = factory->createStudent(10078);
+    Student* stu4 = factory->createStudent(10055);
+    Student* stu5 = factory->createStudent(10082);
+    database->add(database,stu1);
+    database->add(database,stu2);
+    database->add(database,stu3);
+    database->add(database,stu4);
+    database->add(database,stu5);
     commandRunner->list(commandRunner);
+    Student** sortResult = database->sort(database,0);
+    printf("sort\n");
+    for(int i=0;i<database->count;i++){
+        printf("%d\n",(*(sortResult+i))->id);
+    }
 }
 
 int main(int argc,char *argv[])
 {
+    int i;
+    quiksort(arr,0,4);
+    for(i=0;i<5;i++)
+    {
+        printf("%d ",arr[i]);
+    }
+    printf("\n");
     ParseCommand(argc,argv);
     test();
 }
