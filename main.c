@@ -25,13 +25,6 @@ void test()
 
 int main(int argc,char *argv[])
 {
-    int i;
-    quiksort(arr,0,4);
-    for(i=0;i<5;i++)
-    {
-        printf("%d ",arr[i]);
-    }
-    printf("\n");
     ParseCommand(argc,argv);
     test();
 }
