@@ -24,6 +24,7 @@ StudentFactory* new_StudentFactory()
         printf("[ERROR]Out of memory") ;
         return NULL;
     }
+    product->createStudent = createStudent;
     return product;
 }
 
@@ -37,7 +38,10 @@ Student* getByIndex(DataBase* this,size_t index)
 
 void DataBase_add(DataBase* this,Student* stu)
 {
-    if(!this->count)this->data=stu;
+    if(!this->count){
+        this->data=stu;
+        this->count++;
+    }
     else{
         Student* lastStu = getByIndex(this,this->count-1);
         lastStu->next = stu;

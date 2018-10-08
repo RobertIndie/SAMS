@@ -4,7 +4,7 @@ void ParseCommand(int argc,char **argv)
 {
     char help_formatter[] = \
     "This Student-Achievement-Management-System is open source under GPLv2.0.\n\
-Author: AaronRobert \
+Author: AaronRobert \n\
     ";
 
     printf("%s",help_formatter);
@@ -13,7 +13,7 @@ Author: AaronRobert \
 void list(CommandRunner* this)
 {
     Student* p = this->database->data;
-    printf("list:\n");
+    printf("List(count:%d):\n",this->database->count);
     for(int i=0;i<this->database->count;i++){
         printf("%d\n",p->id);
         p = p->next;
