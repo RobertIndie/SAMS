@@ -16,7 +16,11 @@ typedef struct command_runner
     void (*remove)(char**,size_t);//remove one or more students message with id. remove 10001
     void (*edit)(char**,size_t);//edit student message serarched by id. edit 10001 math 200 english 150
 }CommandRunner;
-
+#define ID 0
+#define NAME 1
+#define MATH_SCORE 2
+#define ENGLISH_SCORE 3
+#define COMPUTER_SCORE 4
 typedef struct student_message
 {
     int id;

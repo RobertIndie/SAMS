@@ -16,7 +16,7 @@ void test()
     database->add(database,stu4);
     database->add(database,stu5);
     commandRunner->list(commandRunner);
-    Student** sortResult = database->sort(database,0);
+    Student** sortResult = database->sort(database,ID);
     printf("sort\n");
     for(int i=0;i<database->count;i++){
         printf("%d\n",(*(sortResult+i))->id);

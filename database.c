@@ -48,6 +48,7 @@ void DataBase_add(DataBase* this,Student* stu)
     this->count++;
 }
 
+#define COMPARE(a,b) (a) >= (b) ? ((a) == (b) ? 1 : 2) : 0
 //if a>b return 2
 //if a=b return 1
 //if a<b return 0
@@ -55,7 +56,14 @@ void DataBase_add(DataBase* this,Student* stu)
 //a<=b usage: if(compare(b,a,compareFlag))
 int compare(Student* a,Student* b,int compareFlag)
 {
-    return a->id>=b->id?(a->id==b->id?1:2):0;
+	switch (compareFlag)
+	{
+	case ID:return COMPARE(a->id, b->id);
+	case MATH_SCORE:return COMPARE(a->math_score, b->math_score);
+	case ENGLISH_SCORE:return COMPARE(a->english_score, b->english_score);
+	case COMPUTER_SCORE:return COMPARE(a->computer_score, b->computer_score);
+	}
+    //TODO:ERROR
 }
 
 void quicksort(Student** list, int low, int high,int compareFlag)
