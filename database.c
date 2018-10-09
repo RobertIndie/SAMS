@@ -41,9 +41,16 @@ void DataBase_add(DataBase* this,Student* stu)
         this->data=stu;
     }
     else{
-        Student* lastStu = getByIndex(this,this->count-1);
-        lastStu->next = stu;
-        stu->prev = lastStu;
+		Student* p = this->data;
+		while (p->id <= stu->id && p->next != NULL && p->next->id <= stu->id)
+			p = p->next;
+		Student* p_next = p->next;
+		if (p_next) {
+			p_next->prev = stu;
+			stu->next = p_next;
+		}
+		p->next = stu;
+		stu->prev = p;
     }
     this->count++;
 }
@@ -89,7 +96,7 @@ void quicksort(Student** list, int low, int high,int compareFlag)
     quicksort(list,j+1,high,compareFlag);
 }
 
-//if count is zero,retunr NULL
+//if count is zero,return NULL
 //return result is a new memory.
 Student** DataBase_sort(DataBase* this,int compareFlag)
 {
@@ -103,6 +110,11 @@ Student** DataBase_sort(DataBase* this,int compareFlag)
     }
     quicksort(studentList,0,this->count-1,compareFlag);
     return studentList;
+}
+
+void DataBase_remove(DataBase* this, int id)
+{
+
 }
 
 DataBase* new_DataBase()
