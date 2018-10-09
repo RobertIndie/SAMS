@@ -1,8 +1,13 @@
 #include "include/header.h"
 #include <stdlib.h>
 
+char** divide_command(char*, size_t*);
+
 void ParseCommand(int argc,char **argv)
 {
+	StudentFactory* factory = new_StudentFactory();
+	DataBase* database = new_DataBase();
+	CommandRunner* commandRunner = new_CommandRunner(database, factory);
 	char help_formatter[] = \
 		"This Student-Achievement-Management-System is open source under GPLv2.0.\n\
 Author: AaronRobert \n";
@@ -12,7 +17,13 @@ Author: AaronRobert \n";
 		printf(">>> ");
 		char command[100];
 		scanf("%s", command);
-
+		size_t count;
+		char** paraList = divide_command(command, &count);
+		for (int i = 0; i < count; i++) {
+#define PARSE_COMMAND(command,exp) if (!strcmp(*paraList, (command))) {(exp);}
+			PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1));
+			PARSE_COMMAND("help", commandRunner->help());
+		}
 	}
 }
 
