@@ -3,6 +3,9 @@
 #include <string.h>
 #include "setjmp.h"
 
+//Macro list
+//#define INSERT_BY_ID_ORDER
+
 void ParseCommand(int argc,char **argv);
 
 typedef struct command_runner

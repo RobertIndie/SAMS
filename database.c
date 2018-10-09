@@ -120,7 +120,20 @@ Student** DataBase_sort(DataBase* this,int compareFlag)
 
 void DataBase_remove(DataBase* this, int id)
 {
-
+	Student* p = this->data;
+	while (p) {
+		if (p->id == id) {
+			Student* prev = p->prev;
+			Student* next = p->next;
+			if (prev)prev->next = next;
+			if (next)next->prev = prev;
+			free(p);
+			this->count--;
+			return;
+		}
+		if (!p->next)return;
+		p = p->next;
+	}
 }
 
 DataBase* new_DataBase()
@@ -129,5 +142,6 @@ DataBase* new_DataBase()
     product->count = 0;
     product->add = DataBase_add;
     product->sort = DataBase_sort;
+	product->remove = DataBase_remove;
     return product;
 }
