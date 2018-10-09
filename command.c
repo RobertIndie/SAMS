@@ -3,10 +3,9 @@
 
 void ParseCommand(int argc,char **argv)
 {
-    char help_formatter[] = \
-    "This Student-Achievement-Management-System is open source under GPLv2.0.\n\
-Author: AaronRobert \n\
-    ";
+	char help_formatter[] = \
+		"This Student-Achievement-Management-System is open source under GPLv2.0.\n\
+Author: AaronRobert \n";
 
     printf("%s",help_formatter);
 }
@@ -43,9 +42,10 @@ void CommandRunner_sort(char* sortProperty)
 void list(CommandRunner* this)
 {
     Student* p = this->database->data;
-    printf("List(count:%d):\n",this->database->count);
+    printf("total:%d:\n",this->database->count);
+	printf("ID\tNAME\tMATH SCORE\tENGLISH SCORE\tCOMPUTER SCORE\n");
     for(size_t i=0;i<this->database->count;i++){
-        printf("%d\n",p->id);
+		printf("%d\t%s\t%.2lf\t%.2lf\t%.2lf\n", p->id, p->name, p->math_score, p->english_score, p->computer_score);
         p = p->next;
     }
 }
