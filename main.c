@@ -15,6 +15,7 @@ void test()
     database->add(database,stu3);
     database->add(database,stu4);
     database->add(database,stu5);
+	database->remove(database, 10065);
 	database->remove(database, 10055);
     commandRunner->list(commandRunner);
     Student** sortResult = database->sort(database,ID);
