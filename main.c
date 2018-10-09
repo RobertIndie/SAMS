@@ -28,6 +28,10 @@ void test()
 		"id","10010"
 	};
 	commandRunner->add(commandRunner, addCommand, 2);
+	char* editCommand[] = {
+		"10001","english","100"
+	};
+	commandRunner->edit(commandRunner, editCommand, 3);
     commandRunner->list(commandRunner);
     Student** sortResult = database->sort(database,COMPUTER_SCORE);
     printf("sort\n");

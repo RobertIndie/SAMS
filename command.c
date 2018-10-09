@@ -10,9 +10,8 @@ Author: AaronRobert \n";
     printf("%s",help_formatter);
 }
 
-void CommandRunner_add(CommandRunner* this,char** para, size_t para_count)
+Student* edit_stu(Student* stu, char** para, size_t para_count)
 {
-	Student* stu = this->studentFactory->createStudent(rand());
 	char** p = para;
 	while (para_count) {
 #define NEXT para_count--;if (!para_count)break;p++;
@@ -23,6 +22,13 @@ void CommandRunner_add(CommandRunner* this,char** para, size_t para_count)
 		PARSE_COMMAND("english", stu->english_score, atoi(*p));
 		PARSE_COMMAND("computer", stu->computer_score, atoi(*p));
 	}
+	return stu;
+}
+
+void CommandRunner_add(CommandRunner* this,char** para, size_t para_count)
+{
+	Student* stu = this->studentFactory->createStudent(rand());
+	edit_stu(stu, para, para_count);
 	this->database->add(this->database, stu);
 }
 
@@ -72,6 +78,14 @@ void CommandRunner_remove(CommandRunner* this,char** idList , size_t count)
 	}
 }
 
+void CommandRunner_edit(CommandRunner* this, char** para, size_t count) 
+{
+	if (count < 1)return;//TODO:ERROR
+	Student* stu = this->database->get(this->database, atoi(*para));
+	para++;
+	edit_stu(stu, para, count - 1);
+}
+
 CommandRunner* new_CommandRunner(DataBase* database,StudentFactory* studentFactory)
 {
     CommandRunner* product = (CommandRunner*)malloc(sizeof(CommandRunner));
@@ -86,5 +100,6 @@ CommandRunner* new_CommandRunner(DataBase* database,StudentFactory* studentFacto
 	product->help = CommandRunner_help;
 	product->sort = CommandRunner_sort;
 	product->remove = CommandRunner_remove;
+	product->edit = CommandRunner_edit;
     return product;
 }

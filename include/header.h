@@ -18,7 +18,7 @@ typedef struct command_runner
     void (*list)(struct command_runner*);//list all students message
     void (*sort)(struct command_runner*,char*);//sort by property and print stuedents message list. sort math
     void (*remove)(struct command_runner*,char**,size_t);//remove one or more students message with id. remove 10001 .if id is invalid ,then remove the student whose id is 0.
-    void (*edit)(char**,size_t);//edit student message serarched by id. edit 10001 math 200 english 150
+    void (*edit)(struct command_runner*,char**,size_t);//edit student message serarched by id. edit 10001 math 200 english 150
 }CommandRunner;
 #define ID 0
 #define NAME 1
