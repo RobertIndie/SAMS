@@ -1,7 +1,8 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
-#include "setjmp.h"
+#include <setjmp.h>
+#include <stdlib.h>
 
 //Macro list
 //#define INSERT_BY_ID_ORDER
@@ -12,7 +13,7 @@ typedef struct command_runner
 {
     struct data_base* database;
     struct student_factory* studentFactory;
-    void (*add)(char**,size_t);//add id 10001 name robert math 100 english 100 computer 100
+    void (*add)(struct command_runner*,char**,size_t);//add id 10001 name robert math 100 english 100 computer 100. if value is invalid,then value is set to 0.
     void (*help)();//print help message
     void (*list)(struct command_runner*);//list all students message
     void (*sort)(char*);//sort by property and print stuedents message list. sort math
@@ -44,7 +45,7 @@ typedef struct data_base
 {
     Student* data;//link list
     size_t count;//do not change this var outside the database.c
-    void (*add)(struct data_base*,Student*);
+    void (*add)(struct data_base*,Student*);//add a student message to the database.tow option:add by id order or add to the last node
     Student** (*sort)(struct data_base*,int);//return a sorted link list
     void (*remove)(struct data_base*,int);//remove a student by id
     Student* (*get)(struct data_base*,int);//get a student pointer by id.

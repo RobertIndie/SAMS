@@ -5,6 +5,7 @@ void test()
     StudentFactory* factory = new_StudentFactory();
     DataBase* database = new_DataBase();
     CommandRunner* commandRunner = new_CommandRunner(database,factory);
+	commandRunner->help();
     Student* stu1 = factory->createStudent(10001);
     Student* stu2 = factory->createStudent(10096);
     Student* stu3 = factory->createStudent(10078);
@@ -17,6 +18,10 @@ void test()
     database->add(database,stu5);
 	database->remove(database, 10065);
 	database->remove(database, 10055);
+	char* addCommand[] = {
+		"id","10010"
+	};
+	commandRunner->add(commandRunner, addCommand, 2);
     commandRunner->list(commandRunner);
     Student** sortResult = database->sort(database,ID);
     printf("sort\n");
