@@ -29,17 +29,14 @@ void CommandRunner_add(CommandRunner* this,char** para, size_t para_count)
 void CommandRunner_help()
 {
 	char command_help[] = \
-		"\tadd [{id,name,math,english,computer} (value)] | Add student message\n";
+"\tadd [{id,name,math,english,computer} (value)] | Add student message\n\
+\tlist | list all students' message\n\
+";
 
 	printf("%s", command_help);
 }
 
-void CommandRunner_sort(char* sortProperty)
-{
-	//if()
-}
-
-void list(CommandRunner* this)
+void CommandRunner_list(CommandRunner* this)
 {
     Student* p = this->database->data;
     printf("total:%d:\n",this->database->count);
@@ -48,6 +45,31 @@ void list(CommandRunner* this)
 		printf("%d\t%s\t%.2lf\t%.2lf\t%.2lf\n", p->id, p->name, p->math_score, p->english_score, p->computer_score);
         p = p->next;
     }
+}
+
+void CommandRunner_sort(CommandRunner* this,char* sortProperty)
+{
+	int sortFlag = -1;
+#define CHECK_FLAG(propertyName,flag) if(!strcmp(sortProperty,(propertyName))){sortFlag = flag;}
+	CHECK_FLAG("id", 0);
+	CHECK_FLAG("name", 1);
+	CHECK_FLAG("math", 2);
+	CHECK_FLAG("english", 3);
+	CHECK_FLAG("computer", 4);
+	if (sortFlag == -1)return;//TODO:ERROR
+	this->database->sort(this->database, sortFlag);
+}
+
+void CommandRunner_remove(CommandRunner* this,char** idList , size_t count)
+{
+	char** p = idList;
+	while (count) {
+		int id = atoi(*p);
+		this->database->remove(this->database, id);
+		printf("Remove student:%d\n", id);
+		p++;
+		count--;
+	}
 }
 
 CommandRunner* new_CommandRunner(DataBase* database,StudentFactory* studentFactory)
@@ -59,8 +81,10 @@ CommandRunner* new_CommandRunner(DataBase* database,StudentFactory* studentFacto
     }
     product->database = database;
     product->studentFactory = studentFactory;
-    product->list = list;
+    product->list = CommandRunner_list;
 	product->add = CommandRunner_add;
 	product->help = CommandRunner_help;
+	product->sort = CommandRunner_sort;
+	product->remove = CommandRunner_remove;
     return product;
 }
