@@ -43,6 +43,7 @@ void test()
 
 int main(int argc,char *argv[])
 {
+	Command_UnitTest();
+	test();
     ParseCommand(argc,argv);
-    test();
 }

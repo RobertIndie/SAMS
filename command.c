@@ -6,8 +6,52 @@ void ParseCommand(int argc,char **argv)
 	char help_formatter[] = \
 		"This Student-Achievement-Management-System is open source under GPLv2.0.\n\
 Author: AaronRobert \n";
-
     printf("%s",help_formatter);
+	int exit_flag = 0;
+	while (!exit_flag) {
+		printf(">>> ");
+		char command[100];
+		scanf("%s", command);
+
+	}
+}
+
+char** divide_command(char* command, size_t* count)
+{
+	*count = 0;
+	char* p = command;
+	int canAddCount = 1;
+	while (*p != '\0') {
+		if (*p != ' ') {
+			if (canAddCount) {
+				(*count)++;
+				canAddCount = 0;
+			}
+		}
+		else {
+			canAddCount = 1;
+		}
+		p++;
+	}
+	char** output = (char**)malloc(sizeof(char*)*(*count));
+	int i = 0;
+	int canAddP = 1;
+	p = command;
+	while (*p != '\0') {
+		if (*p != ' ') {
+			if (canAddP) {
+				*(output + i) = p;
+				i++;
+				canAddP = 0;
+			}
+		}
+		else {
+			canAddP = 1;
+			*p = '\0';
+		}
+		p++;
+	}
+	return output;
 }
 
 Student* edit_stu(Student* stu, char** para, size_t para_count)
@@ -103,3 +147,13 @@ CommandRunner* new_CommandRunner(DataBase* database,StudentFactory* studentFacto
 	product->edit = CommandRunner_edit;
     return product;
 }
+
+#ifdef DEBUG
+void Command_UnitTest() {
+	char* str = "add 10001 computer 100";
+	size_t count;
+	char** result = divide_command(str, &count);
+	for (int i = 0; i < count; i++)
+		printf("%s\n", *(result + i));
+}
+#endif

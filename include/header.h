@@ -6,6 +6,11 @@
 
 //Macro list
 //#define INSERT_BY_ID_ORDER
+#define DEBUG
+
+#ifdef DEBUG
+void Command_UnitTest();
+#endif
 
 void ParseCommand(int argc,char **argv);
 
