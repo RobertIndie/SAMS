@@ -41,6 +41,7 @@ void DataBase_add(DataBase* this,Student* stu)
         this->data=stu;
     }
     else{
+#ifdef INSERT_BY_ID_ORDER
 		Student* p = this->data;
 		while (p->id <= stu->id && p->next != NULL && p->next->id <= stu->id)
 			p = p->next;
@@ -51,6 +52,11 @@ void DataBase_add(DataBase* this,Student* stu)
 		}
 		p->next = stu;
 		stu->prev = p;
+#else
+		Student* lastStu = getByIndex(this, this->count - 1);
+		lastStu->next = stu;
+		stu->prev = lastStu;
+#endif
     }
     this->count++;
 }
