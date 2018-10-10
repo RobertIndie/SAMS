@@ -1,32 +1,6 @@
 #include "include/header.h"
 #include <stdlib.h>
 
-char** divide_command(char*, size_t*);
-
-void ParseCommand(int argc,char **argv)
-{
-	StudentFactory* factory = new_StudentFactory();
-	DataBase* database = new_DataBase();
-	CommandRunner* commandRunner = new_CommandRunner(database, factory);
-	char help_formatter[] = \
-		"This Student-Achievement-Management-System is open source under GPLv2.0.\n\
-Author: AaronRobert \n";
-    printf("%s",help_formatter);
-	int exit_flag = 0;
-	while (!exit_flag) {
-		printf(">>> ");
-		char command[100];
-		scanf("%s", command);
-		size_t count;
-		char** paraList = divide_command(command, &count);
-		for (int i = 0; i < count; i++) {
-#define PARSE_COMMAND(command,exp) if (!strcmp(*paraList, (command))) {(exp);}
-			PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1));
-			PARSE_COMMAND("help", commandRunner->help());
-		}
-	}
-}
-
 char** divide_command(char* command, size_t* count)
 {
 	*count = 0;
@@ -65,6 +39,44 @@ char** divide_command(char* command, size_t* count)
 	return output;
 }
 
+char* copy_str(char* dest, char* src) {
+	if (dest != NULL) {
+		free(dest);
+		dest = NULL;
+	}
+	dest = (char*)malloc(sizeof(char)*strlen(src));
+	strcpy(dest, src);
+	return dest;
+}
+
+void ParseCommand(int argc,char **argv)
+{
+	StudentFactory* factory = new_StudentFactory();
+	DataBase* database = new_DataBase();
+	CommandRunner* commandRunner = new_CommandRunner(database, factory);
+	char help_formatter[] = \
+		"This Student-Achievement-Management-System is open source under GPLv2.0.\n\
+Author: AaronRobert \n";
+    printf("%s",help_formatter);
+	char command[100];
+	int exit_flag = 0;
+	while (!exit_flag) {
+		size_t count;
+		printf(">>> ");
+		scanf("%[^\n]", command);
+		getchar();
+		char** paraList = divide_command(command, &count);
+#define PARSE_COMMAND(command,exp) if (!strcmp(*paraList, (command))) {(exp);continue;}
+		PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1));
+		PARSE_COMMAND("help", commandRunner->help());
+		PARSE_COMMAND("list", commandRunner->list(commandRunner));
+		PARSE_COMMAND("sort", commandRunner->sort(commandRunner, *(paraList + 1)));
+		PARSE_COMMAND("remove", commandRunner->remove(commandRunner, paraList + 1, count - 1));
+		PARSE_COMMAND("edit", commandRunner->edit(commandRunner, paraList + 1, count - 1));
+		PARSE_COMMAND("exit", exit_flag = 1);
+	}
+}
+
 Student* edit_stu(Student* stu, char** para, size_t para_count)
 {
 	char** p = para;
@@ -72,7 +84,7 @@ Student* edit_stu(Student* stu, char** para, size_t para_count)
 #define NEXT para_count--;if (!para_count)break;p++;
 #define PARSE_COMMAND(commandName,var,convert) if (!strcmp(*p, (commandName))) {NEXT (var) = (convert);NEXT continue;}
 		PARSE_COMMAND("id", stu->id, atoi(*p));
-		PARSE_COMMAND("name", stu->name, *p);
+		PARSE_COMMAND("name", stu->name, copy_str(stu->name, *p));
 		PARSE_COMMAND("math", stu->math_score, atof(*p));
 		PARSE_COMMAND("english", stu->english_score, atoi(*p));
 		PARSE_COMMAND("computer", stu->computer_score, atoi(*p));
