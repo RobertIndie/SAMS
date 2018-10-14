@@ -21,7 +21,7 @@ typedef struct command_runner
     void (*add)(struct command_runner*,char**,size_t);//add id 10001 name robert math 100 english 100 computer 100. if value is invalid,then value is set to 0.
     void (*help)();//print help message
     void (*list)(struct command_runner*);//list all students message
-    void (*sort)(struct command_runner*,char*);//sort by property and print stuedents message list. sort math
+    void (*sort)(struct command_runner*,char*);//sort by property and print students message list. sort math
     void (*remove)(struct command_runner*,char**,size_t);//remove one or more students message with id. remove 10001 .if id is invalid ,then remove the student whose id is 0.
     void (*edit)(struct command_runner*,char**,size_t);//edit student message serarched by id. edit 10001 math 200 english 150
 }CommandRunner;

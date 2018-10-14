@@ -102,8 +102,12 @@ void CommandRunner_add(CommandRunner* this,char** para, size_t para_count)
 void CommandRunner_help()
 {
 	char command_help[] = \
-"\tadd [{id,name,math,english,computer} (value)] | Add student message\n\
+"\thelp | print help message\n\
+\tadd [{id,name,math,english,computer} (value)] | Add student message\n\
 \tlist | list all students' message\n\
+\tsort (property) | sort by property and print students message list\n\
+\tremove {(id=0)} | remove student\n\
+\tedit (id) {(property) (value)} | edit student\n\
 ";
 
 	printf("%s", command_help);
