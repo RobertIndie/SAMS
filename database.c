@@ -135,6 +135,7 @@ void DataBase_remove(DataBase* this, int id)
 Student* DataBase_get(DataBase* this, int id)
 {
 	Student* p = this->data;
+	if (!p)return NULL;
 	while (p) {
 		if (p->id == id) {
 			return p;
@@ -152,5 +153,6 @@ DataBase* new_DataBase()
     product->sort = DataBase_sort;
 	product->remove = DataBase_remove;
 	product->get = DataBase_get;
+	product->data = NULL;
     return product;
 }
