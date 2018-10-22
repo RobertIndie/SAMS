@@ -67,13 +67,20 @@ Author: AaronRobert \n";
 		getchar();
 		char** paraList = divide_command(command, &count);
 #define PARSE_COMMAND(command,exp) if (!strcmp(*paraList, (command))) {(exp);continue;}
-		PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1));
-		PARSE_COMMAND("help", commandRunner->help());
-		PARSE_COMMAND("list", commandRunner->list(commandRunner));
-		PARSE_COMMAND("sort", commandRunner->sort(commandRunner, *(paraList + 1)));
-		PARSE_COMMAND("remove", commandRunner->remove(commandRunner, paraList + 1, count - 1));
-		PARSE_COMMAND("edit", commandRunner->edit(commandRunner, paraList + 1, count - 1));
-		PARSE_COMMAND("exit", exit_flag = 1);
+		if (!setjmp(ex_stack[++ex_pointer].buf))
+		{
+			PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1));
+			PARSE_COMMAND("help", commandRunner->help());
+			PARSE_COMMAND("list", commandRunner->list(commandRunner));
+			PARSE_COMMAND("sort", commandRunner->sort(commandRunner, *(paraList + 1)));
+			PARSE_COMMAND("remove", commandRunner->remove(commandRunner, paraList + 1, count - 1));
+			PARSE_COMMAND("edit", commandRunner->edit(commandRunner, paraList + 1, count - 1));
+			PARSE_COMMAND("exit", exit_flag = 1);
+		}
+		else {
+			printf("[ERROR] %s\n", ex_stack[ex_pointer].message);
+			ex_pointer--;
+		}
 	}
 }
 

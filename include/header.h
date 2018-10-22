@@ -1,3 +1,5 @@
+#ifndef HEADER
+#define HEADER
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,6 +13,16 @@
 #ifdef DEBUG
 void Command_UnitTest();
 #endif
+
+typedef struct exception
+{
+	jmp_buf buf;
+	char* message;
+}Exception;
+
+Exception ex_stack[256];
+extern int ex_pointer;
+#define EXCEPTION(error_message) ex_stack[ex_pointer].message = (error_message);longjmp(ex_stack[ex_pointer].buf, 1);
 
 void ParseCommand(int argc,char **argv);
 
@@ -59,3 +71,4 @@ typedef struct data_base
 CommandRunner* new_CommandRunner(DataBase*,StudentFactory*);
 StudentFactory* new_StudentFactory();
 DataBase* new_DataBase();
+#endif

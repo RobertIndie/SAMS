@@ -1,5 +1,7 @@
 #include "include/header.h"
 
+int ex_pointer = -1;
+
 void test()
 {
     StudentFactory* factory = new_StudentFactory();
