@@ -9,7 +9,8 @@
 //////////////////////////
 //Macro list
 //#define INSERT_BY_ID_ORDER
-#define DEBUG
+//#define UNIT_TEST
+//#define DEBUG
 /////////////////////////
 
 #ifdef DEBUG

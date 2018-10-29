@@ -4,6 +4,7 @@ int ex_pointer = -1;
 
 void test()
 {
+#ifdef UNIT_TEST
 	if (!setjmp(ex_stack[++ex_pointer].buf))
 	{
 		StudentFactory* factory = new_StudentFactory();
@@ -47,11 +48,14 @@ void test()
 	else {
 		ex_pointer--;
 	}
+#endif
 }
 
 int main(int argc,char *argv[])
 {
+#ifdef DEBUG
 	Command_UnitTest();
+#endif
 	test();
     ParseCommand(argc,argv);
 }
