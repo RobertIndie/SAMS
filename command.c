@@ -66,17 +66,19 @@ Author: AaronRobert \n";
 		scanf("%[^\n]", command);
 		getchar();
 		char** paraList = divide_command(command, &count);
-#define PARSE_COMMAND(command,exp) if (!strcmp(*paraList, (command))) {(exp);isCommandValid = 1;continue;}
+#define PARSE_COMMAND(command,exp,minCount) if (!strcmp(*paraList, (command))) {\
+		if(count-1<minCount){ERROR;printf("Too few arguments.\n");THROW;}\
+		(exp);isCommandValid = 1;continue;}
 		if (!setjmp(ex_stack[++ex_pointer].buf))
 		{
 			int isCommandValid = 0;
-			PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1));
-			PARSE_COMMAND("help", commandRunner->help());
-			PARSE_COMMAND("list", commandRunner->list(commandRunner));
-			PARSE_COMMAND("sort", commandRunner->sort(commandRunner, *(paraList + 1)));
-			PARSE_COMMAND("remove", commandRunner->remove(commandRunner, paraList + 1, count - 1));
-			PARSE_COMMAND("edit", commandRunner->edit(commandRunner, paraList + 1, count - 1));
-			PARSE_COMMAND("exit", exit_flag = 1);
+			PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1),0);
+			PARSE_COMMAND("help", commandRunner->help(),0);
+			PARSE_COMMAND("list", commandRunner->list(commandRunner),0);
+			PARSE_COMMAND("exit", exit_flag = 1,0);
+			PARSE_COMMAND("sort", commandRunner->sort(commandRunner, *(paraList + 1)) ,1);
+			PARSE_COMMAND("remove", commandRunner->remove(commandRunner, paraList + 1, count - 1),1);
+			PARSE_COMMAND("edit", commandRunner->edit(commandRunner, paraList + 1, count - 1),1);
 			if (!isCommandValid) 
 			{
 				ERROR;
@@ -153,7 +155,12 @@ void CommandRunner_sort(CommandRunner* this,char* sortProperty)
 	CHECK_FLAG("math", 2);
 	CHECK_FLAG("english", 3);
 	CHECK_FLAG("computer", 4);
-	if (sortFlag == -1)return;//TODO:ERROR
+	if (sortFlag == -1)
+	{
+		ERROR;
+		printf("Invalid sort flag: %s\n", sortProperty);
+		THROW;
+	}
 	this->database->sort(this->database, sortFlag);
 }
 
@@ -171,7 +178,12 @@ void CommandRunner_remove(CommandRunner* this,char** idList , size_t count)
 
 void CommandRunner_edit(CommandRunner* this, char** para, size_t count) 
 {
-	if (count < 1)return;//TODO:ERROR
+	if (count < 1)
+	{
+		ERROR;
+		printf("Not para found.\n");
+		THROW;
+	}
 	Student* stu = this->database->get(this->database, atoi(*para));
 	para++;
 	edit_stu(stu, para, count - 1);

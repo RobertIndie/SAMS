@@ -4,7 +4,9 @@ Student* createStudent(int id)
 {
     Student* product = (Student*)malloc(sizeof(Student));
     if(!product){
-        printf("[ERROR]Out of memory");
+		ERROR;
+		printf("Out of memory\n");
+		THROW;
         return NULL;
     }
     product->id = id;
@@ -21,7 +23,9 @@ StudentFactory* new_StudentFactory()
 {
     StudentFactory* product = (StudentFactory*)malloc(sizeof(StudentFactory));
     if(!product){
-        printf("[ERROR]Out of memory") ;
+		ERROR;
+		printf("Out of memory\n");
+		THROW;
         return NULL;
     }
     product->createStudent = createStudent;
@@ -121,7 +125,13 @@ Student** DataBase_sort(DataBase* this,int compareFlag)
 void DataBase_remove(DataBase* this, int id)
 {
 	Student* p = this->get(this, id);
-	if (!p)return;
+	if (!p) 
+	{
+		ERROR;
+		printf("Could not find id: %d", id);
+		THROW;
+		return NULL;
+	}
 	Student* prev = p->prev;
 	Student* next = p->next;
 	if (prev)prev->next = next;

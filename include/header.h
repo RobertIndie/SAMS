@@ -24,7 +24,7 @@ typedef struct exception
 Exception ex_stack[256];
 extern int ex_pointer;
 #define ERROR printf("[Error]")
-#define EXCEPTION longjmp(ex_stack[ex_pointer].buf, 0)
+#define THROW longjmp(ex_stack[ex_pointer].buf, 0)
 
 void ParseCommand(int argc,char **argv);
 
