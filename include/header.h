@@ -6,9 +6,11 @@
 #include <setjmp.h>
 #include <stdlib.h>
 
+//////////////////////////
 //Macro list
 //#define INSERT_BY_ID_ORDER
 #define DEBUG
+/////////////////////////
 
 #ifdef DEBUG
 void Command_UnitTest();
@@ -17,12 +19,12 @@ void Command_UnitTest();
 typedef struct exception
 {
 	jmp_buf buf;
-	char* message;
 }Exception;
 
 Exception ex_stack[256];
 extern int ex_pointer;
-#define EXCEPTION(error_message) ex_stack[ex_pointer].message = (error_message);longjmp(ex_stack[ex_pointer].buf, 1);
+#define ERROR printf("[Error]")
+#define EXCEPTION longjmp(ex_stack[ex_pointer].buf, 0)
 
 void ParseCommand(int argc,char **argv);
 

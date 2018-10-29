@@ -66,9 +66,10 @@ Author: AaronRobert \n";
 		scanf("%[^\n]", command);
 		getchar();
 		char** paraList = divide_command(command, &count);
-#define PARSE_COMMAND(command,exp) if (!strcmp(*paraList, (command))) {(exp);continue;}
+#define PARSE_COMMAND(command,exp) if (!strcmp(*paraList, (command))) {(exp);isCommandValid = 1;continue;}
 		if (!setjmp(ex_stack[++ex_pointer].buf))
 		{
+			int isCommandValid = 0;
 			PARSE_COMMAND("add", commandRunner->add(commandRunner, paraList + 1, count - 1));
 			PARSE_COMMAND("help", commandRunner->help());
 			PARSE_COMMAND("list", commandRunner->list(commandRunner));
@@ -76,9 +77,14 @@ Author: AaronRobert \n";
 			PARSE_COMMAND("remove", commandRunner->remove(commandRunner, paraList + 1, count - 1));
 			PARSE_COMMAND("edit", commandRunner->edit(commandRunner, paraList + 1, count - 1));
 			PARSE_COMMAND("exit", exit_flag = 1);
+			if (!isCommandValid) 
+			{
+				ERROR;
+				printf("%s: command not found.\n", *paraList);
+				THROW;
+			}
 		}
 		else {
-			printf("[ERROR] %s\n", ex_stack[ex_pointer].message);
 			ex_pointer--;
 		}
 	}
@@ -96,7 +102,11 @@ Student* edit_stu(Student* stu, char** para, size_t para_count)
 		PARSE_COMMAND("english", stu->english_score, atoi(*p));
 		PARSE_COMMAND("computer", stu->computer_score, atoi(*p));
 		//Unknown property
+		ERROR;
 		printf("[ERROR] Can not find property %s\n", *p);
+		free(stu);
+		stu = NULL;
+		THROW;
 		break;
 	}
 	return stu;
