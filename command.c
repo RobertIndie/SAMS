@@ -89,6 +89,7 @@ Author: AaronRobert \n";
 		else {
 			ex_pointer--;
 		}
+#undef PARSE_COMMAND
 	}
 }
 
@@ -103,6 +104,7 @@ Student* edit_stu(Student* stu, char** para, size_t para_count)
 		PARSE_COMMAND("math", stu->math_score, atof(*p));
 		PARSE_COMMAND("english", stu->english_score, atoi(*p));
 		PARSE_COMMAND("computer", stu->computer_score, atoi(*p));
+#undef PARSE_COMMAND
 		//Unknown property
 		ERROR;
 		printf("[ERROR] Can not find property %s\n", *p);

@@ -130,7 +130,7 @@ void DataBase_remove(DataBase* this, int id)
 		ERROR;
 		printf("Could not find id: %d", id);
 		THROW;
-		return NULL;
+		return;
 	}
 	Student* prev = p->prev;
 	Student* next = p->next;
