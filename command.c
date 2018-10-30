@@ -161,7 +161,18 @@ void CommandRunner_sort(CommandRunner* this,char* sortProperty)
 		printf("Invalid sort flag: %s\n", sortProperty);
 		THROW;
 	}
-	this->database->sort(this->database, sortFlag);
+	Student** result = this->database->sort(this->database, sortFlag);
+	printf("Sorted result:\n");
+	printf("ID\tNAME\tMATH SCORE\tENGLISH SCORE\tCOMPUTER SCORE\n");
+	for (int i = 0; i < this->database->count; i++) {
+		Student* p = *(result + i);
+		printf("%d\t%s\t%.2lf\t%.2lf\t%.2lf\n", p->id, p->name, p->math_score, p->english_score, p->computer_score);
+	}
+	if (!result) 
+	{
+		free(result);
+		result = NULL;
+	}
 }
 
 void CommandRunner_remove(CommandRunner* this,char** idList , size_t count)
