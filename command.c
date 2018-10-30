@@ -56,7 +56,10 @@ void ParseCommand(int argc,char **argv)
 	CommandRunner* commandRunner = new_CommandRunner(database, factory);
 	char help_formatter[] = \
 		"This Student-Achievement-Management-System is open source under GPLv2.0.\n\
-Author: AaronRobert \n";
+Author: AaronRobert \n\
+Email: [Robert.Aaron2017@outlook.com]\n\
+If you have anything to report, welcome to contact me.\n\
+";
     printf("%s",help_formatter);
 	char command[100];
 	int exit_flag = 0;
