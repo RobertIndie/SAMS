@@ -80,7 +80,9 @@ int compare(Student* a,Student* b,int compareFlag)
 	case ENGLISH_SCORE:return COMPARE(a->english_score, b->english_score);
 	case COMPUTER_SCORE:return COMPARE(a->computer_score, b->computer_score);
 	}
-    //TODO:ERROR
+	ERROR;
+	printf("Cannot find compare flag %d", compareFlag);
+	THROW;
 }
 
 void quicksort(Student** list, int low, int high,int compareFlag)
