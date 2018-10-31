@@ -134,7 +134,14 @@ void DataBase_remove(DataBase* this, int id)
 	}
 	Student* prev = p->prev;
 	Student* next = p->next;
-	if (prev)prev->next = next;
+	if (prev)
+	{
+		prev->next = next;
+	}
+	else 
+	{
+		this->data = next;
+	}
 	if (next)next->prev = prev;
 	free(p);
 	this->count--;
